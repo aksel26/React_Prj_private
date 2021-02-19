@@ -2,70 +2,60 @@ import React, { useState } from "react"
 import logo from "./logo.svg"
 import "./App.css"
 import { Navbar, Nav, NavDropdown, Button, Jumbotron } from "react-bootstrap"
-import product1 from "./11.png"
-import product2 from "./12.png"
-import product3 from "./13.png"
+import product1 from "./1.png"
+import product2 from "./2.png"
+import product3 from "./3.png"
 import Info from "./data.js"
+import Navigation from "./navbar.js"
+import Jumbo from "./jumbo.js"
+import Contents from "./contents.js"
 
 function App() {
   let [product, productChange] = useState(Info)
-  console.log(product[0].title)
+
+  let [showDetail, showDetailChange] = []
+  let productImg = [product1, product2, product3]
+
+  showDetail = [...product]
+  // const _product = showDetail.map(function (showDetail, i) {
+  //   console.log("showDetail[0] : ", showDetail.title)
+  //   return (
+  //     <div className="col-4" key={i}>
+  //       <img src={productImg[i]} alt="p1" width="100%" height="50%" />
+  //       <h4>{showDetail.title}</h4>
+  //       <p>{showDetail.content}</p>
+  //     </div>
+  //   )
+  // })
+
   return (
     <div className="App">
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">COFFEE</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ml-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-
-      <Jumbotron className="background">
-        <h1>20% Season OFF!</h1>
-        <p>
-          This is a simple hero unit, a simple jumbotron-style component for
-          calling extra attention to featured content or information.
-        </p>
-        <p>
-          <Button variant="primary">Learn more</Button>
-        </p>
-      </Jumbotron>
-
+      <Navigation />
+      <Jumbo />
       <div className="container">
         <div className="row">
-          <div className="col-4">
-            <img src={product1} alt="p1" width="100%" />
-            <h4>{product[0].title}</h4>
-            <p>딸기잼 & 20,500</p>
-          </div>
-          <div className="col-4">
-            <img src={product2} alt="p1" width="100%" height="57%" />
-            <h4>카페 베로나</h4>
-            <p>스벅 원두커피 & 21,000</p>
-          </div>
-          <div className="col-4">
-            <img src={product3} alt="p1" width="100%" />
-            <h4>브렉퍼스트</h4>
-            <p>스벅 원두커피 & 21,100</p>
-          </div>
+          {/* {_product} */}
+          {showDetail.map(function (a, i) {
+            return <Card show={showDetail[i]} i={i} img={productImg[i]} />
+          })}
+          {/* <Card show={showDetail[0]} img={productImg[0]} />
+          <Card show={showDetail[1]} img={productImg[1]} />
+          <Card show={showDetail[2]} img={productImg[2]} /> */}
         </div>
       </div>
     </div>
   )
 }
-
+function Card(props) {
+  console.log(props.show)
+  return (
+    <div className="col-4">
+      <img src={props.img} alt="p" width="100%" height="50%" />
+      <h4>{props.show.title}</h4>
+      <p>
+        {props.show.content} & {props.show.price}
+      </p>
+    </div>
+  )
+}
 export default App

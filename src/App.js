@@ -1,10 +1,15 @@
+import React, { useState } from "react"
 import logo from "./logo.svg"
 import "./App.css"
 import { Navbar, Nav, NavDropdown, Button, Jumbotron } from "react-bootstrap"
 import product1 from "./11.png"
 import product2 from "./12.png"
 import product3 from "./13.png"
+import Info from "./data.js"
+
 function App() {
+  let [product, productChange] = useState(Info)
+  console.log(product[0].title)
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -43,17 +48,17 @@ function App() {
       <div className="container">
         <div className="row">
           <div className="col-4">
-            <img src={product1} width="100%" />
-            <h4>진심의 딸기</h4>
+            <img src={product1} alt="p1" width="100%" />
+            <h4>{product[0].title}</h4>
             <p>딸기잼 & 20,500</p>
           </div>
           <div className="col-4">
-            <img src={product2} width="100%" height="57%" />
+            <img src={product2} alt="p1" width="100%" height="57%" />
             <h4>카페 베로나</h4>
             <p>스벅 원두커피 & 21,000</p>
           </div>
           <div className="col-4">
-            <img src={product3} width="100%" />
+            <img src={product3} alt="p1" width="100%" />
             <h4>브렉퍼스트</h4>
             <p>스벅 원두커피 & 21,100</p>
           </div>

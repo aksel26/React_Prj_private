@@ -1,0 +1,83 @@
+@import "./_reset.scss";
+// 보통 쓸데없는(?) 파일들을 _를 붙여서 작명한다.
+
+// 1. 변수로 활용 가능
+$메인칼라: #ff0000;
+
+.red {
+  color: $메인칼라;
+}
+
+// 2. @import 파일경로
+// 호환성이 좋게 기본파일 혹은 자주 쓰는 파일(reset)을 만들어 놓는다.
+// body {
+//   margin: 0;
+// }
+
+// div {
+//   box-sizing: border-box;
+// }
+
+// 3. nesting
+div.container h4 {
+  color: blue;
+}
+div.container p {
+  color: green;
+}
+// 위처럼 셀텍터가 너무 길어지는 경우
+// 아래처럼 짜는 것들이 nesting
+div.container {
+  h4 {
+    color: blue;
+  }
+}
+div.container {
+  p {
+    color: blue;
+  }
+}
+
+// 5 .@mixin 함수만드는 문법임 ---> 가져다 쓸때는 ? @include 함수()
+// 선언은 항상 사용보다 위에
+@mixin 함수() {
+  background-color: #eeeeee;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+}
+
+.my-alert {
+  // background-color: #eeeeee;
+  // padding: 20px;
+  // border-radius: 5px;
+  // max-width: 500px;
+  // width: 100%;
+  // margin: auto;
+
+  @include 함수();
+}
+
+// 4. @extend
+// 비효율적
+// .my-alert2 {
+//   background-color: #eeeeee;
+//   padding: 20px;
+//   border-radius: 5px;
+//   max-width: 500px;
+//   width: 100%;
+//   margin: auto;
+// }
+
+.my-alert2 {
+  @extend .my-alert;
+  background: #ffe691;
+}
+
+.my-alert {
+  p {
+    margin-bottom: 0;
+  }
+}

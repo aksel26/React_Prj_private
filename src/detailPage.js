@@ -3,6 +3,7 @@ import "./App.css"
 import { Navbar, Nav, NavDropdown, Button, Jumbotron } from "react-bootstrap"
 import { useHistory, useParams } from "react-router-dom"
 import styled from "styled-components"
+import "./Detail.scss"
 
 let 박스 = styled.div`
   padding: 20px;
@@ -40,7 +41,14 @@ function DetailPage(props) {
       <박스>
         <제목 색상={"red"}>Detail</제목>
         <제목 색상="blue">Detail</제목>
+        <제목 className="red">Detail</제목>
       </박스>
+      <div className="my-alert">
+        <p>몇개 안남았어요</p>
+      </div>
+      <div className="my-alert2">
+        <p>몇개 안남았어요</p>
+      </div>
       <div className="row">
         <div className="col-md-6">
           <img

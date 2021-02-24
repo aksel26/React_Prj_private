@@ -10,13 +10,14 @@ import Navigation from "./navbar.js"
 import Jumbo from "./jumbo.js"
 import DetailPage from "./detailPage.js"
 import { Link, Route, Switch } from "react-router-dom"
+import axios from "axios"
 
 function App() {
   let [product, productChange] = useState(Info)
 
   let [showDetail, showDetailChange] = []
   let productImg = [product1, product2, product3]
-
+  let moreProduct = []
   showDetail = [...product]
   // const _product = showDetail.map(function (showDetail, i) {
   //   console.log("showDetail[0] : ", showDetail.title)
@@ -39,12 +40,40 @@ function App() {
           <div className="row">
             {/* {_product} */}
             {showDetail.map(function (a, i) {
-              return <Card show={showDetail[i]} i={i} img={productImg[i]} />
+              return (
+                <Card show={showDetail[i]} i={i} img={productImg[i]} key={i} />
+              )
             })}
             {/* <Card show={showDetail[0]} img={productImg[0]} />
           <Card show={showDetail[1]} img={productImg[1]} />
           <Card show={showDetail[2]} img={productImg[2]} /> */}
           </div>
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              // axios.post('서버URL', 전달할 데이터)
+              // axios.post('서버URL', {id : 'id' , pw : 1234})
+              // 참고 : 요청시의 header설정(캐쉬 등등) 도 가능
+
+              // 로딩중이라는 UI 띄움
+              axios
+                .get("https://codingapple1.github.io/shop/data2.json") //get요청
+                .then((result) => {
+                  // 로딩중이라는 UI 삭제 or 안보이게 처리
+                  productChange([...product, ...result.data])
+                  // result.map(function (result, i) {
+                  //   return <div className="_more">{result.data[i].title}</div>
+                  // })
+                })
+
+                .catch(() => {
+                  // 로딩중이라는 UI 삭제 or 안보이게 처리
+                  console.log("failed")
+                }) //실패할 경우
+            }}
+          >
+            더보기
+          </button>
         </div>
       </Route>
       <Switch>

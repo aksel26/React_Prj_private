@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "./App.css"
 import { Navbar, Nav, NavDropdown, Button, Jumbotron } from "react-bootstrap"
 import { useHistory, useParams } from "react-router-dom"
@@ -14,7 +14,41 @@ let 제목 = styled.h4`
   color: ${(props) => props.색상};
 `
 
+// class Detail2 extends React.Component {
+//   componentDidMount() {}
+
+//   componentWillUnmount() {}
+
+//   shouldComponentUpdate() {}
+// }
+
 function DetailPage(props) {
+  let [alert, alertSet] = useState(true)
+  // 컴포넌트가 mount되었을때, 컴포넌트가 update될때, 특정 코드를 실행할 수 있다.
+  useEffect(
+    () => {
+      let timer = setTimeout(() => {
+        alertSet(false)
+      }, 2000)
+      // setTimeout이 페이지 이동하면서 버그가 생갈 수도 있기 때문에 주의할점 : ㅌ타이머를 제거한다.
+
+      // 사라질때 코드를 실행시킬 수 있음
+      return function 어쩌구() {
+        // 실행할 코드~~ (<-사라질때 실행됨)
+
+        //타이머를 해제하는 코드
+        clearTimeout(timer)
+      }
+      // return ()=>{}
+
+      // 여러개 사용 가능하고 적은 순서대로 실행된다.
+      // useEffect(()=>{}}
+    },
+    [
+      // 업데이트시엔 실행 안되게
+    ]
+  )
+
   let history = useHistory() //history라는 오브젝트 생성, 방문기록 등을 저장해놓는 오브젝트
   let { id } = useParams() // 모든 parameter가 들어있다.
   // let productTitle, productContent
@@ -43,12 +77,11 @@ function DetailPage(props) {
         <제목 색상="blue">Detail</제목>
         <제목 className="red">Detail</제목>
       </박스>
-      <div className="my-alert">
-        <p>몇개 안남았어요</p>
-      </div>
-      <div className="my-alert2">
-        <p>몇개 안남았어요</p>
-      </div>
+      {alert === true ? (
+        <div className="my-alert">
+          <p>몇개 안남았어요</p>
+        </div>
+      ) : null}
       <div className="row">
         <div className="col-md-6">
           <img

@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext } from "react"
 import "./App.css"
-import { Navbar, Nav, NavDropdown, Button, Jumbotron } from "react-bootstrap"
+import { Nav } from "react-bootstrap"
 import { useHistory, useParams } from "react-router-dom"
 import styled from "styled-components"
 import "./Detail.scss"
 import { 재고context } from "./App.js"
+import { CSSTransition } from "react-transition-group"
 
 let 박스 = styled.div`
   padding: 20px;
@@ -26,6 +27,8 @@ let 제목 = styled.h4`
 function DetailPage(props) {
   let [alert, alertSet] = useState(true)
   let _재고 = useContext(재고context)
+  let [tab, tabSet] = useState(0)
+  let [tabSwitch, setSwitch] = useState(false)
   // 컴포넌트가 mount되었을때, 컴포넌트가 update될때, 특정 코드를 실행할 수 있다.
   useEffect(
     () => {
@@ -123,6 +126,38 @@ function DetailPage(props) {
           </button>
         </div>
       </div>
+
+      {/* Tab만들기 */}
+      <Nav variant="tabs" defaultActiveKey="/link-0" className="mt-5">
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link-0"
+            onClick={() => {
+              tabSet(0)
+              setSwitch(false)
+            }}
+          >
+            Active
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link-1"
+            onClick={() => {
+              tabSet(1)
+              setSwitch(false)
+            }}
+          >
+            Option 2
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
+      {/* <div>000</div>
+      <div>111</div>
+      <div>222</div> */}
+      <CSSTransition in={tabSwitch} classNames="wow" timeout={500}>
+        <TabContent pushed={tab} _setSwitch={setSwitch} />
+      </CSSTransition>
     </div>
   )
 }
@@ -130,6 +165,20 @@ function DetailPage(props) {
 // 재고 관련 컴포넌트
 function Info(props) {
   return <p>재고 : {props._재고[0]}</p>
+}
+
+// Tab관련 컴포넌트
+function TabContent(props) {
+  useEffect(() => {
+    props._setSwitch(true)
+  })
+  if (props.pushed === 0) {
+    return <div>0번째 내용입니다.</div>
+  } else if (props.pushed === 1) {
+    return <div>1번째 내용입니다.</div>
+  } else if (props.pushed === 2) {
+    return <div>2번째 내용입니다.</div>
+  }
 }
 
 export default DetailPage

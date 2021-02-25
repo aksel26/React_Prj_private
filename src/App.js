@@ -1,7 +1,5 @@
 import React, { useContext, useState } from "react"
-import logo from "./logo.svg"
 import "./App.css"
-import { Navbar, Nav, NavDropdown, Button, Jumbotron } from "react-bootstrap"
 import product1 from "./1.png"
 import product2 from "./2.png"
 import product3 from "./3.png"
@@ -9,7 +7,7 @@ import Info from "./data.js"
 import Navigation from "./navbar.js"
 import Jumbo from "./jumbo.js"
 import DetailPage from "./detailPage.js"
-import { Link, Route, Switch } from "react-router-dom"
+import { Route, Switch } from "react-router-dom"
 import axios from "axios"
 
 // 1. createContext() : 범위를 생성해준다 (같은 값을 공유할 범위)

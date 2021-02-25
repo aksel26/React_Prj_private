@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import "./App.css"
-import { Navbar, Nav, NavDropdown, Button, Jumbotron } from "react-bootstrap"
+import { Button, Jumbotron } from "react-bootstrap"
 
 function jumbo() {
   return (

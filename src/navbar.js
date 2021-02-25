@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import "./App.css"
-import { Navbar, Nav, NavDropdown, Button, Jumbotron } from "react-bootstrap"
+import { Navbar, Nav, NavDropdown } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 function navbar() {

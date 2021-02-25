@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import logo from "./logo.svg"
 import "./App.css"
 import { Navbar, Nav, NavDropdown, Button, Jumbotron } from "react-bootstrap"
@@ -12,13 +12,22 @@ import DetailPage from "./detailPage.js"
 import { Link, Route, Switch } from "react-router-dom"
 import axios from "axios"
 
+// 1. createContext() : 범위를 생성해준다 (같은 값을 공유할 범위)
+// 다른 페이지에 있는 컴포넌트에서 사용하기 위해 export를 사용한다. 받는 컴포넌트에서는 import해준다.
+export let 재고context = React.createContext()
+
 function App() {
   let [product, productChange] = useState(Info)
 
   let [showDetail, showDetailChange] = []
   let productImg = [product1, product2, product3]
   let moreProduct = []
+
   showDetail = [...product]
+
+  // 재고량
+  let [재고, 재고변경] = useState([10, 11, 12])
+
   // const _product = showDetail.map(function (showDetail, i) {
   //   console.log("showDetail[0] : ", showDetail.title)
   //   return (
@@ -37,17 +46,26 @@ function App() {
       <Route exact path="/">
         <Jumbo />
         <div className="container">
-          <div className="row">
-            {/* {_product} */}
-            {showDetail.map(function (a, i) {
-              return (
-                <Card show={showDetail[i]} i={i} img={productImg[i]} key={i} />
-              )
-            })}
-            {/* <Card show={showDetail[0]} img={productImg[0]} />
+          {/* 2. 공유를 원하는 부분에 감싸준다. */}
+          <재고context.Provider value={재고}>
+            <div className="row">
+              {/* {_product} */}
+              {showDetail.map(function (a, i) {
+                return (
+                  <Card
+                    show={showDetail[i]}
+                    i={i}
+                    img={productImg[i]}
+                    key={i}
+                  />
+                )
+              })}
+              {/* <Card show={showDetail[0]} img={productImg[0]} />
           <Card show={showDetail[1]} img={productImg[1]} />
           <Card show={showDetail[2]} img={productImg[2]} /> */}
-          </div>
+            </div>
+          </재고context.Provider>
+
           <button
             className="btn btn-primary"
             onClick={() => {
@@ -80,7 +98,10 @@ function App() {
         {/* <Route path="/detail"> */}
         <Route path="/detail/:id">
           {/* 아무 문자나 받겠다는 URL작성법 */}
-          <DetailPage _product={product} />
+
+          <재고context.Provider value={재고}>
+            <DetailPage _product={product} _재고={재고} _재고변경={재고변경} />
+          </재고context.Provider>
         </Route>
         <Route path="/:id">
           <div>아무거나 적엇을때이거보여줌</div>
@@ -94,6 +115,9 @@ function App() {
   )
 }
 function Card(props) {
+  // 3. context 를 받아오기 위한 Hook 설정
+  // let _재고 = useContext(범위이름);
+  let _재고 = useContext(재고context)
   console.log(props.show)
   return (
     <div className="col-4">
@@ -102,8 +126,16 @@ function Card(props) {
       <p>
         {props.show.content} & {props.show.price}
       </p>
+      {_재고[props.i]}
+
+      {/* 컴포넌트가 또 있는 경우 */}
+      {/* <Test></Test> */}
     </div>
   )
 }
+// function Test() {
+//   let _재고 = useContext(재고context)
+//   return <p>{_재고}</p>
+// }
 
 export default App

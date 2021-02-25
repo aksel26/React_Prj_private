@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import "./App.css"
 import { Navbar, Nav, NavDropdown, Button, Jumbotron } from "react-bootstrap"
 import { useHistory, useParams } from "react-router-dom"
 import styled from "styled-components"
 import "./Detail.scss"
+import { 재고context } from "./App.js"
 
 let 박스 = styled.div`
   padding: 20px;
@@ -24,6 +25,7 @@ let 제목 = styled.h4`
 
 function DetailPage(props) {
   let [alert, alertSet] = useState(true)
+  let _재고 = useContext(재고context)
   // 컴포넌트가 mount되었을때, 컴포넌트가 update될때, 특정 코드를 실행할 수 있다.
   useEffect(
     () => {
@@ -55,20 +57,20 @@ function DetailPage(props) {
   let productTitle, key
 
   // 1. 원본 데이터 불러오기 find함수 사용
-  // let productFind = props._product.find(function (상품) {
-  //   return 상품.id == id
-  // })
+  let productFind = props._product.find(function (상품) {
+    return 상품.id == id
+  })
 
   // 2. 원본 데이터를 반복문으로 불러오기
-  for (let i = 0; i < props._product.length; i++) {
-    if (Number(id) === props._product[i].id) {
-      productTitle = props._product[i].title
-      key = props._product[i].id
+  // for (let i = 0; i < props._product.length; i++) {
+  //   if (Number(id) === props._product[i].id) {
+  //     productTitle = props._product[i].title
+  //     key = props._product[i].id
 
-      // productContent = props._product[i].content
-      break
-    }
-  }
+  //     // productContent = props._product[i].content
+  //     break
+  //   }
+  // }
 
   return (
     <div className="container">
@@ -94,11 +96,22 @@ function DetailPage(props) {
 
           {/* <h4 className="pt-5">{productFind.title}</h4> */}
           <h4 className="pt-5" key={key}>
-            {productTitle}
+            {/* {productTitle} */}
           </h4>
-          {/* <p>{productFind.content}</p>
-          <p>{productFind.price}원</p> */}
-          <button className="btn btn-danger">주문하기</button>
+          <p>{productFind.content}</p>
+          <p>{productFind.price}원</p>
+
+          {/* 재고 표시 */}
+          <Info _재고={props._재고}></Info>
+
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              props._재고변경([9, 10, 11])
+            }}
+          >
+            주문하기
+          </button>
           <button
             className="btn btn-danger"
             onClick={() => {
@@ -112,6 +125,11 @@ function DetailPage(props) {
       </div>
     </div>
   )
+}
+
+// 재고 관련 컴포넌트
+function Info(props) {
+  return <p>재고 : {props._재고[0]}</p>
 }
 
 export default DetailPage

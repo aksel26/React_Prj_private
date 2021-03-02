@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.css"
 import reportWebVitals from "./reportWebVitals"
 import { BrowserRouter } from "react-router-dom"
 import { Provider } from "react-redux"
-import { createStore } from "redux"
+import { combineReducers, createStore } from "redux"
 
 // state초기값
 // let store = createStore(() => {
@@ -22,6 +22,16 @@ let 초기값 = [
   { id: 2, name: "탐앤탐스 커피", quan: 12 },
   { id: 3, name: "투썸플레이스 커피", quan: 32 },
 ]
+
+// 다른 성격의 state를 만들고 싶으면 reducer를 하나 더 만들어야 한다.
+let alert초기값 = true
+function reducer2(state = alert초기값, action) {
+  if (action.type === "닫기") {
+    return false
+  } else {
+    return state
+  }
+}
 
 // reducer는 항상 state데이터를 뱉어야 한다.  수정된 state를 퉤 뱉는 함수다.
 // state = 기본state default parameter (ES6신 문법)
@@ -40,7 +50,12 @@ function reducer(state = 초기값, action) {
     return state
   }
 }
-let store = createStore(reducer)
+// let store = createStore(reducer)
+
+// 여러개의 함수를 하나로 만들어주는 기능 combineReducers
+let store = createStore(combineReducers({ reducer, reducer2 }))
+
+//reduce를 몇개 합치면 store데이터 뽑아쓸때도 주의해야한다.
 
 ReactDOM.render(
   <React.StrictMode>

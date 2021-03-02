@@ -9,6 +9,7 @@ import Jumbo from "./jumbo.js"
 import DetailPage from "./detailPage.js"
 import { Route, Switch } from "react-router-dom"
 import axios from "axios"
+import Cart from "./cart.js"
 
 // 1. createContext() : 범위를 생성해준다 (같은 값을 공유할 범위)
 // 다른 페이지에 있는 컴포넌트에서 사용하기 위해 export를 사용한다. 받는 컴포넌트에서는 import해준다.
@@ -19,7 +20,6 @@ function App() {
 
   let [showDetail, showDetailChange] = []
   let productImg = [product1, product2, product3]
-  let moreProduct = []
 
   showDetail = [...product]
 
@@ -101,6 +101,12 @@ function App() {
             <DetailPage _product={product} _재고={재고} _재고변경={재고변경} />
           </재고context.Provider>
         </Route>
+
+        {/* 장바구니 페이지 */}
+        <Route path="/cart">
+          <Cart></Cart>
+        </Route>
+
         <Route path="/:id">
           <div>아무거나 적엇을때이거보여줌</div>
         </Route>

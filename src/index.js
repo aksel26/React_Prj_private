@@ -5,11 +5,49 @@ import App from "./App"
 import "bootstrap/dist/css/bootstrap.css"
 import reportWebVitals from "./reportWebVitals"
 import { BrowserRouter } from "react-router-dom"
+import { Provider } from "react-redux"
+import { createStore } from "redux"
+
+// state초기값
+// let store = createStore(() => {
+//   return [
+//     { id: 1, name: "커피빈 커피", quan: 21 },
+//     { id: 2, name: "탐앤탐스 커피", quan: 12 },
+//     { id: 3, name: "투썸플레이스 커피", quan: 32 },
+//   ]
+// })
+
+let 초기값 = [
+  { id: 1, name: "커피빈 커피", quan: 21 },
+  { id: 2, name: "탐앤탐스 커피", quan: 12 },
+  { id: 3, name: "투썸플레이스 커피", quan: 32 },
+]
+
+// reducer는 항상 state데이터를 뱉어야 한다.  수정된 state를 퉤 뱉는 함수다.
+// state = 기본state default parameter (ES6신 문법)
+function reducer(state = 초기값, action) {
+  if (action.type === "수량증가") {
+    // stae를 변경하기 위한 사본 만들기
+    let copy = [...초기값]
+    copy[0].quan++
+
+    return copy
+  } else if (action.type === "수량감소") {
+    let copy = [...초기값]
+    copy[0].quan--
+    return copy
+  } else {
+    return state
+  }
+}
+let store = createStore(reducer)
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

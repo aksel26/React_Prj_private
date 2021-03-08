@@ -36,7 +36,19 @@ function reducer2(state = alert초기값, action) {
 // reducer는 항상 state데이터를 뱉어야 한다.  수정된 state를 퉤 뱉는 함수다.
 // state = 기본state default parameter (ES6신 문법)
 function reducer(state = 초기값, action) {
-  if (action.type === "수량증가") {
+  if (action.type === "항목추가") {
+    let copy = [...state]
+    for (let i = 0; i < copy.length; i++) {
+      if (action.payload.id === copy[i].id) {
+        copy[i].quan++
+        return copy
+      }
+    }
+    copy.push(action.payload)
+    console.log(copy)
+
+    return copy
+  } else if (action.type === "수량증가") {
     // stae를 변경하기 위한 사본 만들기
     let copy = [...초기값]
     copy[0].quan++

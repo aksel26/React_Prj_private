@@ -6,6 +6,7 @@ import styled from "styled-components"
 import "./Detail.scss"
 import { 재고context } from "./App.js"
 import { CSSTransition } from "react-transition-group"
+import { connect } from "react-redux"
 
 let 박스 = styled.div`
   padding: 20px;
@@ -111,6 +112,11 @@ function DetailPage(props) {
             className="btn btn-danger"
             onClick={() => {
               props._재고변경([9, 10, 11])
+              props.dispatch({
+                type: "항목추가",
+                payload: { id: 5, name: "새 상품", quan: 1 },
+              })
+              history.push("/cart")
             }}
           >
             주문하기
@@ -180,5 +186,12 @@ function TabContent(props) {
     return <div>2번째 내용입니다.</div>
   }
 }
+function state를props화(state) {
+  console.log(state)
+  return {
+    state: state.reducer,
+    alertOn: state.reducer2,
+  }
+}
 
-export default DetailPage
+export default connect(state를props화)(DetailPage)
